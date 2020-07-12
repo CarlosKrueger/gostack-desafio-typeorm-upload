@@ -3,9 +3,7 @@ import { getCustomRepository, getRepository, In } from 'typeorm';
 import csvParse from 'csv-parse';
 import fs from 'fs';
 import path from 'path';
-import AppError from '../errors/AppError';
 import TransactionsRepository from '../repositories/TransactionsRepository';
-import CreateTransactionService from './CreateTransactionService';
 import uploadConfig from '../config/upload';
 import Transaction from '../models/Transaction';
 import Category from '../models/Category';
@@ -21,7 +19,6 @@ class ImportTransactionsService {
   async execute(fileName: string): Promise<Transaction[]> {
     const transactionsRepository = getCustomRepository(TransactionsRepository);
     const categoriesRepository = getRepository(Category);
-    const createTransaction = new CreateTransactionService();
     const csvFilePath = path.join(uploadConfig.directory, fileName);
     const readCSVStream = fs.createReadStream(csvFilePath);
 
